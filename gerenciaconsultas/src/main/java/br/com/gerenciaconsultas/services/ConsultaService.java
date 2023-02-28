@@ -9,6 +9,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import br.com.gerenciaconsultas.dtos.ConsultaDto;
+import br.com.gerenciaconsultas.exceptions.NotFoundException;
 import br.com.gerenciaconsultas.models.Consulta;
 import br.com.gerenciaconsultas.models.Nutricionista;
 import br.com.gerenciaconsultas.models.Paciente;
@@ -35,19 +36,9 @@ public class ConsultaService {
     @Transactional
     public Consulta create(ConsultaDto consultaDto) {
 
-        Optional<Nutricionista> optNutricionista = this.nutricionistaService.findById(consultaDto.getNutricionista());
-        Optional<Paciente> optPaciente = this.pacienteService.findById(consultaDto.getPaciente());
+        Nutricionista nutricionista = this.nutricionistaService.findById(consultaDto.getNutricionista());
+        Paciente paciente = this.pacienteService.findById(consultaDto.getPaciente());
 
-        if(!optPaciente.isPresent()) {
-            throw new RuntimeException("PACIENTE não encontrado!");
-        }
-
-        if(!optNutricionista.isPresent()) {
-            throw new RuntimeException("NUTRICIONISTA não encontrada!");
-        }
-        
-        Nutricionista nutricionista = optNutricionista.get();
-        Paciente paciente = optPaciente.get();
         Consulta consulta = this.modelMapper.map(consultaDto, Consulta.class);
         
         consulta.setNutricionista(nutricionista);
@@ -61,23 +52,13 @@ public class ConsultaService {
     public Consulta update(ConsultaDto consultaDto, Integer id) {
 
         Optional<Consulta> optConsulta = consultaRepository.findById(id);
-        Optional<Nutricionista> optNutricionista = this.nutricionistaService.findById(consultaDto.getNutricionista());
-        Optional<Paciente> optPaciente = this.pacienteService.findById(consultaDto.getPaciente());
+        Nutricionista nutricionista = this.nutricionistaService.findById(consultaDto.getNutricionista());
+        Paciente paciente = this.pacienteService.findById(consultaDto.getPaciente());
 
         if(!optConsulta.isPresent()) {
-            throw new RuntimeException("CONSULTA não encontrada!");
+            throw new NotFoundException("CONSULTA não encontrada na base de dados!");
         }
 
-        if(!optNutricionista.isPresent()) {
-            throw new RuntimeException("NUTRICIONISTA não encontrada!");
-        }
-
-        if(!optPaciente.isPresent()) {
-            throw new RuntimeException("PACIENTE não encontrado!");
-        }
-
-        Nutricionista nutricionista = optNutricionista.get();
-        Paciente paciente = optPaciente.get();
         Consulta consultaAtualizado = this.modelMapper.map(consultaDto, Consulta.class);
         consultaAtualizado.setId(optConsulta.get().getId());
         consultaAtualizado.setPaciente(paciente);
@@ -92,7 +73,7 @@ public class ConsultaService {
         Optional<Consulta> optConsulta = consultaRepository.findById(id);
 
         if(!optConsulta.isPresent()) {
-            throw new RuntimeException("CONSULTA não encontrada!");
+            throw new NotFoundException("CONSULTA não encontrada na base de dados!");
         }
 
         Consulta consulta = optConsulta.get();
@@ -100,15 +81,11 @@ public class ConsultaService {
         consultaRepository.delete(consulta);
     }
 
-    public Optional<Consulta> findById(Integer id) {
+    public Consulta findById(Integer id) {
 
         Optional<Consulta> optConsulta = consultaRepository.findById(id);
-
-        if(!optConsulta.isPresent()) {
-            throw new RuntimeException("CONSULTA não encontrada!");
-        }
         
-        return optConsulta;
+        return optConsulta.orElseThrow(() -> new NotFoundException("CONSULTA não encontrada na base de dados!"));
     }
 
     public List<Consulta> findAll() {
