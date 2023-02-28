@@ -18,9 +18,11 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.gerenciaconsultas.dtos.PacienteDto;
 import br.com.gerenciaconsultas.models.Paciente;
 import br.com.gerenciaconsultas.services.PacienteService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
 @RequestMapping("/pacientes")
+@Tag(name = "Pacientes")
 public class PacienteResource {
 
     private final PacienteService pacienteService;
@@ -44,12 +46,12 @@ public class PacienteResource {
     public ResponseEntity<Object> deletePaciente(@PathVariable(value = "id") Integer id) {
 
         pacienteService.delete(id);
-        return ResponseEntity.status(HttpStatus.OK).body("O PACIENTE foi deletado com sucesso!");
+        return ResponseEntity.status(HttpStatus.OK).body("PACIENTE deletado com sucesso!");
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Paciente> getOnePaciente(@PathVariable(value = "id") Integer id) {
-        return ResponseEntity.status(HttpStatus.OK).body(this.pacienteService.findById(id).get());
+        return ResponseEntity.status(HttpStatus.OK).body(this.pacienteService.findById(id));
     }
 
     @GetMapping

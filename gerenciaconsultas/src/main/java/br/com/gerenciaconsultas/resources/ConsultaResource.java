@@ -18,9 +18,11 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.gerenciaconsultas.dtos.ConsultaDto;
 import br.com.gerenciaconsultas.models.Consulta;
 import br.com.gerenciaconsultas.services.ConsultaService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
 @RequestMapping("/consultas")
+@Tag(name = "Consultas")
 public class ConsultaResource {
 
     private final ConsultaService consultaService;
@@ -49,7 +51,7 @@ public class ConsultaResource {
 
     @GetMapping("/{id}")
     public ResponseEntity<Consulta> findById(@PathVariable(value = "id") Integer id) {
-        return ResponseEntity.status(HttpStatus.OK).body(this.consultaService.findById(id).get());
+        return ResponseEntity.status(HttpStatus.OK).body(this.consultaService.findById(id));
     }
 
     @GetMapping

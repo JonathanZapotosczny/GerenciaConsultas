@@ -18,9 +18,11 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.gerenciaconsultas.dtos.NutricionistaDto;
 import br.com.gerenciaconsultas.models.Nutricionista;
 import br.com.gerenciaconsultas.services.NutricionistaService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
 @RequestMapping("/nutricionistas")
+@Tag(name = "Nutricionistas")
 public class NutricionistaResource {
 
     private final NutricionistaService nutricionistaService;
@@ -49,7 +51,7 @@ public class NutricionistaResource {
 
     @GetMapping("/{id}")
     public ResponseEntity<Nutricionista> getOneNutricionista(@PathVariable(value = "id") Integer id) {
-        return ResponseEntity.status(HttpStatus.OK).body(this.nutricionistaService.findById(id).get());
+        return ResponseEntity.status(HttpStatus.OK).body(this.nutricionistaService.findById(id));
     }
 
     @GetMapping
