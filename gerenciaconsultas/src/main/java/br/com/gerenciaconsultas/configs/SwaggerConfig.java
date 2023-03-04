@@ -21,7 +21,7 @@ public class SwaggerConfig {
         return new Info()
         .title("GerenciaConsultas")
         .description("API para Gerenciamento de Consultas")
-        .version("1.0");
+        .version("1.0.0");
     }
 
     private Contact contact() {

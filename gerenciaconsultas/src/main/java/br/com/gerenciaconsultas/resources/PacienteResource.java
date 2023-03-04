@@ -1,9 +1,9 @@
 package br.com.gerenciaconsultas.resources;
 
-import java.util.List;
-
 import javax.validation.Valid;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -55,7 +55,7 @@ public class PacienteResource {
     }
 
     @GetMapping
-    public ResponseEntity<List<Paciente>> getAllPacientes(){
-        return ResponseEntity.status(HttpStatus.OK).body(this.pacienteService.findAll());
+    public ResponseEntity<Page<Paciente>> getAllPacientes(Pageable pageable){
+        return ResponseEntity.status(HttpStatus.OK).body(this.pacienteService.findAll(pageable));
     }   
 }

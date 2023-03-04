@@ -1,11 +1,12 @@
 package br.com.gerenciaconsultas.services;
 
-import java.util.List;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
 
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import br.com.gerenciaconsultas.dtos.NutricionistaDto;
@@ -28,19 +29,19 @@ public class NutricionistaService {
     @Transactional
     public Nutricionista create(NutricionistaDto nutricionistaDto) {
 
-        validCrn(nutricionistaDto);
+        this.validCrn(nutricionistaDto);
 
         Nutricionista nutricionista = this.modelMapper.map(nutricionistaDto, Nutricionista.class);
         nutricionista.setAtivo(true);
-        return nutricionistaRepository.save(nutricionista);
+        return this.nutricionistaRepository.save(nutricionista);
     }
 
     @Transactional
     public Nutricionista update(NutricionistaDto nutricionistaDto, Integer id) {
 
-        Optional<Nutricionista> optNutricionista = nutricionistaRepository.findById(id);
+        Optional<Nutricionista> optNutricionista = this.nutricionistaRepository.findById(id);
 
-        if(!optNutricionista.isPresent()) {
+        if(optNutricionista.isEmpty()) {
             throw new NotFoundException("NUTRICIONISTA não encontrado(a) na base de dados!");
         }
 
@@ -48,35 +49,35 @@ public class NutricionistaService {
         nutricionistaAtualizado.setId(optNutricionista.get().getId());
         nutricionistaAtualizado.setCrn(optNutricionista.get().getCrn());
 
-        return nutricionistaRepository.save(nutricionistaAtualizado);
+        return this.nutricionistaRepository.save(nutricionistaAtualizado);
     }
 
     @Transactional
     public void delete(Integer id) {
 
-        Optional<Nutricionista> optNutricionista = nutricionistaRepository.findById(id);
+        Optional<Nutricionista> optNutricionista = this.nutricionistaRepository.findById(id);
 
-        if(!optNutricionista.isPresent()) {
+        if(optNutricionista.isEmpty()) {
             throw new NotFoundException("NUTRICIONISTA não encontrado(a) na base de dados!");
         }
 
         Nutricionista nutricionista = optNutricionista.get();
-        nutricionistaRepository.delete(nutricionista);
+        this.nutricionistaRepository.delete(nutricionista);
     }
 
     public Nutricionista findById(Integer id) {
 
-        Optional<Nutricionista> optNutricionista = nutricionistaRepository.findById(id);
+        Optional<Nutricionista> optNutricionista = this.nutricionistaRepository.findById(id);
 
         return optNutricionista.orElseThrow(() -> new NotFoundException("NUTRICIONISTA não encontrado(a) na base de dados!"));
     }
 
-    public List<Nutricionista> findAll() {
-        return nutricionistaRepository.findAll();
+    public Page<Nutricionista> findAll(Pageable pageable) {
+        return this.nutricionistaRepository.findAll(pageable);
     }
 
     private void validCrn (NutricionistaDto nutricionistaDto) {
-        Optional<Nutricionista> optNutricionista = nutricionistaRepository.findByCrn(nutricionistaDto.getCrn());
+        Optional<Nutricionista> optNutricionista = this.nutricionistaRepository.findByCrn(nutricionistaDto.getCrn());
 
         if(optNutricionista.isPresent()) {
             throw new DataIntegrityViolationException("CRN Já cadastrado na base de dados!");

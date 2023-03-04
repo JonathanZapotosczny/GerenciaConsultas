@@ -1,9 +1,10 @@
 package br.com.gerenciaconsultas.resources;
 
-import java.util.List;
 
 import javax.validation.Valid;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -55,7 +56,7 @@ public class NutricionistaResource {
     }
 
     @GetMapping
-    public ResponseEntity<List<Nutricionista>> getAllNutricionistas(){
-        return ResponseEntity.status(HttpStatus.OK).body(this.nutricionistaService.findAll());
+    public ResponseEntity<Page<Nutricionista>> getAllNutricionistas(Pageable pageable){
+        return ResponseEntity.status(HttpStatus.OK).body(this.nutricionistaService.findAll(pageable));
     }
 }

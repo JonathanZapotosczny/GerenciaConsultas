@@ -1,11 +1,12 @@
 package br.com.gerenciaconsultas.services;
 
-import java.util.List;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
 
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import br.com.gerenciaconsultas.dtos.ConsultaDto;
@@ -22,7 +23,7 @@ public class ConsultaService {
     private final PacienteService pacienteService;
     private final NutricionistaService nutricionistaService;
     private final ModelMapper modelMapper;
-
+    
     public ConsultaService(ConsultaRepository consultaRepository,
                            ModelMapper modelMapper,
                            PacienteService pacienteService,
@@ -45,17 +46,17 @@ public class ConsultaService {
         consulta.setPaciente(paciente);
         consulta.setAtivo(true);
 
-        return consultaRepository.save(consulta);
+        return this.consultaRepository.save(consulta);
     }
 
     @Transactional
     public Consulta update(ConsultaDto consultaDto, Integer id) {
 
-        Optional<Consulta> optConsulta = consultaRepository.findById(id);
+        Optional<Consulta> optConsulta = this.consultaRepository.findById(id);
         Nutricionista nutricionista = this.nutricionistaService.findById(consultaDto.getNutricionista());
         Paciente paciente = this.pacienteService.findById(consultaDto.getPaciente());
 
-        if(!optConsulta.isPresent()) {
+        if(optConsulta.isEmpty()) {
             throw new NotFoundException("CONSULTA não encontrada na base de dados!");
         }
 
@@ -70,9 +71,9 @@ public class ConsultaService {
     @Transactional
     public void delete(Integer id) {
 
-        Optional<Consulta> optConsulta = consultaRepository.findById(id);
+        Optional<Consulta> optConsulta = this.consultaRepository.findById(id);
 
-        if(!optConsulta.isPresent()) {
+        if(optConsulta.isEmpty()) {
             throw new NotFoundException("CONSULTA não encontrada na base de dados!");
         }
 
@@ -83,13 +84,13 @@ public class ConsultaService {
 
     public Consulta findById(Integer id) {
 
-        Optional<Consulta> optConsulta = consultaRepository.findById(id);
+        Optional<Consulta> optConsulta = this.consultaRepository.findById(id);
         
         return optConsulta.orElseThrow(() -> new NotFoundException("CONSULTA não encontrada na base de dados!"));
     }
 
-    public List<Consulta> findAll() {
-        return consultaRepository.findAll();
+    public Page<Consulta> findAll(Pageable pageable) {
+        return consultaRepository.findAll(pageable);
     }
     
 }

@@ -1,9 +1,9 @@
 package br.com.gerenciaconsultas.resources;
 
-import java.util.List;
-
 import javax.validation.Valid;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -55,8 +55,8 @@ public class ConsultaResource {
     }
 
     @GetMapping
-    public ResponseEntity<List<Consulta>> findAll(){
-        return ResponseEntity.status(HttpStatus.OK).body(this.consultaService.findAll());    
+    public ResponseEntity<Page<Consulta>> findAll(Pageable pageable){
+        return ResponseEntity.status(HttpStatus.OK).body(this.consultaService.findAll(pageable));    
     }
     
 }

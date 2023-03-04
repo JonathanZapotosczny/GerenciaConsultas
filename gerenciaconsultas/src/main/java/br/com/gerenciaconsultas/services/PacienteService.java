@@ -1,11 +1,12 @@
 package br.com.gerenciaconsultas.services;
 
-import java.util.List;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
 
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import br.com.gerenciaconsultas.dtos.PacienteDto;
@@ -32,15 +33,15 @@ public class PacienteService {
 
         Paciente paciente = this.modelMapper.map(pacienteDto, Paciente.class);
         paciente.setAtivo(true);
-        return pacienteRepository.save(paciente);
+        return this.pacienteRepository.save(paciente);
     }
 
     @Transactional
     public Paciente update(PacienteDto pacienteDto, Integer id) {
 
-        Optional<Paciente> optPaciente = pacienteRepository.findById(id);
+        Optional<Paciente> optPaciente = this.pacienteRepository.findById(id);
         
-        if(!optPaciente.isPresent()) {
+        if(optPaciente.isEmpty()) {
             throw new NotFoundException("PACIENTE não encontrado(a) na base de dados!");
         }
 
@@ -48,35 +49,35 @@ public class PacienteService {
         pacienteAtualizado.setId(optPaciente.get().getId());
         pacienteAtualizado.setCpf(optPaciente.get().getCpf());
 
-        return pacienteRepository.save(pacienteAtualizado);
+        return this.pacienteRepository.save(pacienteAtualizado);
     }
 
     @Transactional
     public void delete(Integer id) {
 
-        Optional<Paciente> optPaciente = pacienteRepository.findById(id);
+        Optional<Paciente> optPaciente = this.pacienteRepository.findById(id);
 
-        if(!optPaciente.isPresent()) {
+        if(optPaciente.isEmpty()) {
             throw new NotFoundException("PACIENTE não encontrado(a) na base de dados!");
         }
 
         Paciente paciente = optPaciente.get();
-        pacienteRepository.delete(paciente);
+        this.pacienteRepository.delete(paciente);
     }
 
     public Paciente findById(Integer id) {
 
-        Optional<Paciente> optPaciente = pacienteRepository.findById(id);
+        Optional<Paciente> optPaciente = this.pacienteRepository.findById(id);
         
         return optPaciente.orElseThrow(() -> new NotFoundException("PACIENTE não encontrado(a) na base de dados!"));
     }
 
-    public List<Paciente> findAll() {
-        return pacienteRepository.findAll();
+    public Page<Paciente> findAll(Pageable pageable) {
+        return this.pacienteRepository.findAll(pageable);
     }
 
     private void validCpf (PacienteDto pacienteDto) {
-        Optional<Paciente> optPaciente = pacienteRepository.findByCpf(pacienteDto.getCpf());
+        Optional<Paciente> optPaciente = this.pacienteRepository.findByCpf(pacienteDto.getCpf());
 
         if(optPaciente.isPresent()) {
             throw new DataIntegrityViolationException("CPF Já cadastrado na base de dados!");
