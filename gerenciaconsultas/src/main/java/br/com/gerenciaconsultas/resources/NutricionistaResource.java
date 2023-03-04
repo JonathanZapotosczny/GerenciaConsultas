@@ -22,7 +22,7 @@ import br.com.gerenciaconsultas.services.NutricionistaService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
-@RequestMapping("/nutricionistas")
+@RequestMapping("/gerencia/nutricionistas")
 @Tag(name = "Nutricionistas")
 public class NutricionistaResource {
 

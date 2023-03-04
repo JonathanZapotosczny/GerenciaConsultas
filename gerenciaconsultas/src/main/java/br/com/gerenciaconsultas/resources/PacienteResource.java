@@ -21,7 +21,7 @@ import br.com.gerenciaconsultas.services.PacienteService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
-@RequestMapping("/pacientes")
+@RequestMapping("/gerencia/pacientes")
 @Tag(name = "Pacientes")
 public class PacienteResource {
 
