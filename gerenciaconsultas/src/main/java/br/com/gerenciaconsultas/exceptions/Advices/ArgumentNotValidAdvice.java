@@ -18,9 +18,8 @@ import br.com.gerenciaconsultas.exceptions.Message.MessageException;
 public class ArgumentNotValidAdvice extends ResponseEntityExceptionHandler {
     
     @Override
-    protected ResponseEntity<Object> handleMethodArgumentNotValid(
-            MethodArgumentNotValidException exception, HttpHeaders headers,
-            HttpStatus status, WebRequest request) {
+    protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException exception, HttpHeaders headers, 
+                                                                    HttpStatus status, WebRequest request) {
 
         List<String> errors = exception.getBindingResult()
                 .getFieldErrors()
@@ -28,7 +27,8 @@ public class ArgumentNotValidAdvice extends ResponseEntityExceptionHandler {
                 .map(x -> x.getDefaultMessage())
                 .collect(Collectors.toList());
 
-        MessageException error = new MessageException(new Date(), HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST.name(), errors, request.getDescription(false).substring(4));
+        MessageException error = new MessageException(new Date(), HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST.name(), errors, 
+                                                        request.getDescription(false).substring(4));
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }

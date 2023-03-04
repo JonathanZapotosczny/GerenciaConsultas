@@ -30,5 +30,4 @@ public class ConsultaDto {
     private String status;
 
     private Boolean ativo;
-    
 }

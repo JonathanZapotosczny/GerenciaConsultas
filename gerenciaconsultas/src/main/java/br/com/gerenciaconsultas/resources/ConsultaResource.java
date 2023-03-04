@@ -45,7 +45,7 @@ public class ConsultaResource {
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> delete(@PathVariable(value = "id") Integer id) {
 
-        consultaService.delete(id);
+        this.consultaService.delete(id);
         return ResponseEntity.status(HttpStatus.OK).body("CONSULTA deletada com sucesso!");
     }
 
@@ -58,5 +58,4 @@ public class ConsultaResource {
     public ResponseEntity<Page<Consulta>> findAll(Pageable pageable){
         return ResponseEntity.status(HttpStatus.OK).body(this.consultaService.findAll(pageable));    
     }
-    
 }

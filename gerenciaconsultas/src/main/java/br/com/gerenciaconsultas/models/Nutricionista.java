@@ -38,5 +38,4 @@ public class Nutricionista {
     private String telefone;
 
     private Boolean ativo;
-    
 }

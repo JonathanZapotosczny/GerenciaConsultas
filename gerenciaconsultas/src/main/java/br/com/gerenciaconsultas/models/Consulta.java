@@ -42,5 +42,4 @@ public class Consulta {
     private String status;
 
     private Boolean ativo;
-    
 }

@@ -11,7 +11,7 @@ import io.swagger.v3.oas.models.info.Info;
 public class SwaggerConfig {
 
     @Bean
-    public OpenAPI customOpenApi() {
+    public OpenAPI openApi() {
         return new OpenAPI()
         .info(info()
         .contact(contact()));

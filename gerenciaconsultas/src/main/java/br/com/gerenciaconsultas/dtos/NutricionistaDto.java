@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 public class NutricionistaDto {
     
     @NotBlank(message = "O campo CRN é obrigátorio!")
-    @Length(min = 11, max = 11, message = "O campo CRN deverá ter exatamente {max} caracteres!")
+    @Length(min = 12, max = 12, message = "O campo CRN deverá ter exatamente {max} caracteres!")
     private String crn;
 
     @NotBlank(message = "O campo NOME é obrigátorio!")
@@ -30,5 +30,4 @@ public class NutricionistaDto {
     private String telefone;
 
     private Boolean ativo;
-    
 }

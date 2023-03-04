@@ -45,7 +45,7 @@ public class PacienteResource {
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deletePaciente(@PathVariable(value = "id") Integer id) {
 
-        pacienteService.delete(id);
+        this.pacienteService.delete(id);
         return ResponseEntity.status(HttpStatus.OK).body("PACIENTE deletado com sucesso!");
     }
 

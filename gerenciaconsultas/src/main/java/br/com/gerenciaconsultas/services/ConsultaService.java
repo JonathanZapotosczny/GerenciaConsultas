@@ -65,7 +65,7 @@ public class ConsultaService {
         consultaAtualizado.setPaciente(paciente);
         consultaAtualizado.setNutricionista(nutricionista);
 
-        return consultaRepository.save(consultaAtualizado);
+        return this.consultaRepository.save(consultaAtualizado);
     }
 
     @Transactional
@@ -79,7 +79,7 @@ public class ConsultaService {
 
         Consulta consulta = optConsulta.get();
 
-        consultaRepository.delete(consulta);
+        this.consultaRepository.delete(consulta);
     }
 
     public Consulta findById(Integer id) {
@@ -90,7 +90,6 @@ public class ConsultaService {
     }
 
     public Page<Consulta> findAll(Pageable pageable) {
-        return consultaRepository.findAll(pageable);
-    }
-    
+        return this.consultaRepository.findAll(pageable);
+    }  
 }

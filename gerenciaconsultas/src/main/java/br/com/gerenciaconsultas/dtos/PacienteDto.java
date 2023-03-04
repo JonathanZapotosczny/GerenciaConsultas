@@ -59,5 +59,4 @@ public class PacienteDto {
     private String observacoes;
 
     private Boolean ativo;
-    
 }

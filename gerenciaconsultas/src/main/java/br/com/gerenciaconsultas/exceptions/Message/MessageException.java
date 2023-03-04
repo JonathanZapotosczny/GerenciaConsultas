@@ -30,5 +30,4 @@ public class MessageException {
         this.message = Arrays.asList(messageS);
         this.path = path;
     }
-
 }

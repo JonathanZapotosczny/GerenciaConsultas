@@ -46,7 +46,7 @@ public class NutricionistaResource {
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteNutricionista(@PathVariable(value = "id") Integer id) {
 
-        nutricionistaService.delete(id);
+        this.nutricionistaService.delete(id);
         return ResponseEntity.status(HttpStatus.OK).body("NUTRICIONISTA deletado com sucesso!");
     }
 
