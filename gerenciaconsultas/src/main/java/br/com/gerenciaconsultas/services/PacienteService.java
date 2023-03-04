@@ -48,6 +48,7 @@ public class PacienteService {
         Paciente pacienteAtualizado = this.modelMapper.map(pacienteDto, Paciente.class);
         pacienteAtualizado.setId(optPaciente.get().getId());
         pacienteAtualizado.setCpf(optPaciente.get().getCpf());
+        pacienteAtualizado.setAtivo(true);
 
         return this.pacienteRepository.save(pacienteAtualizado);
     }

@@ -57,6 +57,6 @@ public class PacienteDto {
     private Double peso;
     
     private String observacoes;
-
+    
     private Boolean ativo;
 }

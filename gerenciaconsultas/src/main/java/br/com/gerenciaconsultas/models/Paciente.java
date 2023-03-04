@@ -66,5 +66,6 @@ public class Paciente {
     @Column(columnDefinition = "TEXT")
     private String observacoes;
 
+    @Column(nullable = false)
     private Boolean ativo; 
 }

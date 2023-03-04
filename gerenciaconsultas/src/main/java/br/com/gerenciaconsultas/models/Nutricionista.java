@@ -25,7 +25,7 @@ public class Nutricionista {
     @JsonIgnore
     private int id;
 
-    @Column(nullable = false, unique = true, length = 11)
+    @Column(nullable = false, unique = true, length = 12)
     private String crn;
 
     @Column(nullable = false, length = 255)
@@ -37,5 +37,6 @@ public class Nutricionista {
     @Column(nullable = false, length = 16)
     private String telefone;
 
+    @Column(nullable = false)
     private Boolean ativo;
 }

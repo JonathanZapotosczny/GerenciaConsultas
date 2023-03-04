@@ -4,13 +4,12 @@ services:
     image: mysql
     container_name: mysql
     environment:
-      MYSQL_ROOT_PASSWORD: root3607
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: gerenciaconsultas
     ports:
     - "3306:3306"
     volumes:
-    - ./init.sql:/docker-entrypoint-initdb.d/init.sql
-    - product:/var/lib/mysql
+    - mysql:/var/lib/mysql
     
 volumes:
-  product:
-  init.sql:
+  mysql:

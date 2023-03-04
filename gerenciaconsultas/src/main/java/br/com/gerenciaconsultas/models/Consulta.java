@@ -40,6 +40,4 @@ public class Consulta {
     
     @Column(nullable = false, length = 9)
     private String status;
-
-    private Boolean ativo;
 }

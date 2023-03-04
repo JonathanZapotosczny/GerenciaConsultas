@@ -44,7 +44,7 @@ public class ConsultaService {
         
         consulta.setNutricionista(nutricionista);
         consulta.setPaciente(paciente);
-        consulta.setAtivo(true);
+        consulta.setStatus("AGENDADO");
 
         return this.consultaRepository.save(consulta);
     }

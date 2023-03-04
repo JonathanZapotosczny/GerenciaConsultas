@@ -28,6 +28,4 @@ public class ConsultaDto {
     
     @NotBlank(message = "O campo STATUS é obrigátorio!")
     private String status;
-
-    private Boolean ativo;
 }

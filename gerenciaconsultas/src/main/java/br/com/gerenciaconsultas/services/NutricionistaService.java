@@ -48,6 +48,7 @@ public class NutricionistaService {
         Nutricionista nutricionistaAtualizado = this.modelMapper.map(nutricionistaDto, Nutricionista.class);
         nutricionistaAtualizado.setId(optNutricionista.get().getId());
         nutricionistaAtualizado.setCrn(optNutricionista.get().getCrn());
+        nutricionistaAtualizado.setAtivo(true);
 
         return this.nutricionistaRepository.save(nutricionistaAtualizado);
     }
