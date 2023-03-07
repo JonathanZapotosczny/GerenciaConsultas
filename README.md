@@ -38,7 +38,7 @@ Nutricionistas
 {
     "crn": "CRN-3 123456",
     "nome": "Francisca dos Santos",
-    "email": "francista.santos@gmail.com",
+    "email": "francisca.santos@gmail.com",
     "telefone": "(41) 9 8119-2610"
 }
 ```
