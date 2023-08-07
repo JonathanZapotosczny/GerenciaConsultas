@@ -31,3 +31,8 @@ build/
 
 ### VS Code ###
 .vscode/
+
+/contrateme/mvnw
+/contrateme/mvnw.cmd
+/contrateme/.mvn/wrapper/maven-wrapper.jar
+/contrateme/.mvn/wrapper/maven-wrapper.properties
